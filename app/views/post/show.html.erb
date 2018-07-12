@@ -1,0 +1,51 @@
+<div class="container">
+    <h1><%=@post.title%></h1><hr/>
+    <div style="text-align:right;">
+        <!--to_s:문자열로 변환,+기준으로 나눠서,첫번쨰-->
+        <div><%=@post.created_at.to_s.split("+").first%>, <%=time_ago_in_words(@post.created_at)%> ago</div> 
+        <div>User name : <%=@post.user.username%></div>
+        <a href="/post/edit/<%=@post.id%>"><span class="badge badge-pill badge-success">수정</span></a>
+        <a href="/post/destroy/<%=@post.id%>"><span class="badge badge-pill badge-danger">삭제</span></a>
+        
+        
+        <div><%= @post.liked_users.size %>명이 좋아합니다.</div>
+        <% if current_user.is_like?(@post) %>
+            <a href="/likes/likes_toggle/<%=@post.id%>">좋아요 취소</a>
+            <!--<#%= link_to "좋아요 취소", likes_likes_toggle_path(@post), method: "post" %>-->
+        <% else %>
+            <a href="/likes/likes_toggle/<%=@post.id%>">좋아요</a>
+            <!--<#%= link_to "좋아요", likes_likes_toggle_path(@post), method: "post" %>-->
+        <% end %>
+     
+    </div>
+  
+    
+    <p><%= simple_format(@post.content)%></p>
+    
+    <% unless @post.image.nil? %>
+        <%= image_tag @post.image, width: "600" %>
+        <%= image_tag @post.thumb %>
+        <%= image_tag @post.middle %>
+    <%end%>
+    
+    
+    <div style="text-align:right;">
+        <a href="/post/index"><button type="button" class="btn btn-info">목록</button></a><hr>
+    </div>
+    
+    <%@post.replies.each do |r| %>
+        <%= r.user.username %> : <%=r.content%>
+        <a href="/reply/destroy/<%=r.id%>"><span class="badge badge-pill badge-danger">삭제</span></a>
+        <br>
+    <%end%>
+    
+    
+    <form action="/reply/create" method="post">
+        <input name="post_id" value="<%=@post.id%>" hidden="true">
+        <div class="row">
+          <textarea name="content" class="form-control col-11" id="exampleFormControlTextarea1" rows="3"  placeholder="댓글작성"></textarea>
+          <button type="submit" class="btn btn-dark">댓글 작성</button>
+        </div>
+        
+    </form>    
+</div>
