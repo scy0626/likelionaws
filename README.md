@@ -1,7 +1,6 @@
 # CRUD 기능 구현
 - 실제 웹서비스를 만들기 전 연습을 위해 ruby 를 통해 CRUD 기능을 구현하였습니다.
 - 모델-뷰-컨트롤러(Model–View–Controller, MVC) 패턴으로 구현하였습니다.
-- c9에서 ruby를 사용하기 위해 기본적으로 제공하는 틀을 사용 하였습니다.
 
 ## 구현한 기능
 - 게시물의 Create(생성), Read(읽기), Update(갱신), Delete(삭제)
